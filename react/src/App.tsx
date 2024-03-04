@@ -97,7 +97,7 @@ function App() {
                     )}
             <footer className={"flex flex-col items-center sticky top-[100vh] mt-4"}>
                 <p className={"italic text-muted-foreground"}>Tacki's Pterodactyl Server Allocator</p>
-                <a href="https://github.com" className={"text-muted-foreground text-xl mt-4"}><GitHubLogoIcon/></a>
+                <a href="https://github.com/JoshBrading/Ptero-Share" target={"_blank"} className={"text-muted-foreground text-xl mt-4"}><GitHubLogoIcon/></a>
             </footer>
         </div>
 )
