@@ -2,6 +2,8 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {Progress} from "@/components/ui/progress.tsx";
 import {useEffect, useState} from "react";
 import {getSystemAllocation} from "@/lib/ptero.ts";
+import {systemCard} from "../config.json"
+
 
 interface allocation{
     cpu: number;
@@ -23,15 +25,14 @@ export function ServerAllocation () {
     return (
         <Card className={"max-w-full lg:max-w-72 border-0"}>
             <CardHeader>
-                <CardTitle>System Allocation</CardTitle>
-                <CardDescription>Please do not abuse the available allocation space, thank you
-                    :)</CardDescription>
+                <CardTitle>{systemCard.title}</CardTitle>
+                <CardDescription>{systemCard.description}</CardDescription>
             </CardHeader>
             <CardContent className={"grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1"}>
                 <Card className={"w-48 md:w-56 border-0"}>
                     <CardHeader>
                         <CardTitle>Memory</CardTitle>
-                        <CardDescription>DDR4 3200</CardDescription>
+                        <CardDescription>{systemCard.memoryDescription}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Progress color={((serverAllocation.ram / nodeAllocation.ram) * 100) > 80? "bg-red-500" : ""} value={(serverAllocation.ram / nodeAllocation.ram) * 100}/>
@@ -42,7 +43,7 @@ export function ServerAllocation () {
                 <Card className={"w-48 md:w-56 border-0"}>
                     <CardHeader>
                         <CardTitle>CPU</CardTitle>
-                        <CardDescription>AMD Ryzen 5 3600</CardDescription>
+                        <CardDescription>{systemCard.cpuDescription}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Progress color={((serverAllocation.cpu / nodeAllocation.cpu) * 100) > 80? "bg-red-500" : ""} value={(serverAllocation.cpu / nodeAllocation.cpu) * 100} className={''}/>
@@ -54,7 +55,7 @@ export function ServerAllocation () {
                 <Card className={"w-48 md:w-56 border-0"}>
                     <CardHeader>
                         <CardTitle>Storage</CardTitle>
-                        <CardDescription>Samsung 870 SSD</CardDescription>
+                        <CardDescription>{systemCard.storageDescription}</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Progress color={((serverAllocation.disk / nodeAllocation.disk) * 100) > 80? "bg-red-500" : ""} value={(serverAllocation.disk / nodeAllocation.disk) * 100}/>

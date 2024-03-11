@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {getUserServers} from "@/lib/ptero.ts";
 import {CreateServerDialog} from "@/components/CreateServerDialog.tsx";
+import {DonateCard} from "@/components/DonateCard.tsx";
 
 const panelURL = import.meta.env.VITE_PANEL_URL + '/server/';
 
@@ -35,6 +36,7 @@ export function ServerList() {
         <>
 
             <div className={"grid gap-4 grid-cols-1 sm:2 md:grid-cols-3 2xl:grid-cols-4"}>
+                <DonateCard/>
                 {servers?.map((server: Server) => {
                     return (
                         <Card key={server.uuid} className={"border-0 col-span-1 w-full"}>

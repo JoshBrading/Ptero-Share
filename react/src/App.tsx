@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {ServerAllocation} from "@/components/ServerAllocation.tsx";
 import {ServerList} from "@/components/ServerList.tsx";
 import * as supabase from "@/lib/supabase.ts";
+import {AdminLogin} from "@/components/AdminLogin.tsx";
+import {UserCard} from "@/components/UserCard.tsx";
 
 //const supabase = getSupabaseClient();
 
@@ -15,21 +17,14 @@ async function signInWithDiscord() {
     })
 }
 
-async function logout(){
-    await supabase.getSupabaseClient().auth.signOut();
-}
+
 
 function App() {
     const [session, setSession] = useState<Session | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [username, setUsername] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false); 
     useEffect(() => {
         supabase.getSupabaseClient().auth.getSession().then(({ data: { session } }) => {
             setSession(session)
-        });
-
-        supabase.getSupabaseClient().auth.getUser().then(({ data: { user } }) => {
-            setUsername(user?.identities?.at(0)?.identity_data?.custom_claims?.global_name)
         });
 
         const {
@@ -61,17 +56,21 @@ function App() {
                             <Card className={"mt-8"}>
                                 <CardHeader>
                                     <CardTitle>Login</CardTitle>
-                                    <CardDescription>Connect your account to begin managing your
-                                        servers</CardDescription>
+                                    <CardDescription>Connect your account to begin managing your servers</CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <Button onClick={() => {
-                                        setLoading(true);
-                                        signInWithDiscord().finally(() => setLoading(false));
-                                    }} variant="secondary" disabled={loading}>
-                                        {loading ? 'Logging in...' : <><DiscordLogoIcon className={"mr-2"}/> Sign in
-                                            with
-                                            Discord</>}</Button>
+                                    <div className={"flow-root"}>
+                                        <Button onClick={() => {
+                                            setLoading(true);
+                                            signInWithDiscord().finally(() => setLoading(false));
+                                        }} className={"float-left"} variant="secondary" disabled={loading}>
+                                            {loading ? 'Logging in...' : <><DiscordLogoIcon className={"mr-2"}/>
+                                                Sign in with Discord</>}
+                                        </Button>
+                                        <div className={"float-right"}>
+                                            <AdminLogin/>
+                                        </div>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
@@ -80,16 +79,7 @@ function App() {
                         <div className={"lg:flex lg:space-x-4 space-y-4 lg:space-y-0"}>
                             <ServerAllocation/>
                             <div className={"space-y-4"}>
-                                <Card className={"border-0"}>
-                                    <CardHeader className={"flow-root"}>
-                                        <CardTitle className={"float-left mt-4"}>Hello, {username!}</CardTitle>
-                                        <Button onClick={() => {
-                                            logout();
-                                        }} variant="destructive" className={"float-right max-w-32"}>
-                                            Logout
-                                        </Button>
-                                    </CardHeader>
-                                </Card>
+                                <UserCard/>
                                 <ServerList/>
                             </div>
 
